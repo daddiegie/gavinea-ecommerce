@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gavinea - Premium E-Commerce Store</title>
+    <!-- Font Awesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        /* General Styles */
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+            color: #333;
+        }
+
+        h1 {
+            text-align: center;
+            color: #003366;
+            font-size: 36px;
+            margin-top: 20px;
+        }
+
+        /* Sidebar Styles */
+        .sidebar {
+            width: 80px;
+            height: 100vh;
+            background-color: #003366;
+            color: #FFD700;
+            position: fixed;
+            top: 0;
+            left: 0;
+            padding: 20px 10px;
+            box-sizing: border-box;
+            box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+            transition: width 0.3s ease;
+        }
+
+        .sidebar:hover {
+            width: 200px;
+        }
+
+        .sidebar h2 {
+            text-align: center;
+            margin-bottom: 30px;
+            font-size: 22px;
+            color: #FFD700;
+            white-space: nowrap;
+        }
+
+        .sidebar ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .sidebar ul li {
+            margin-bottom: 20px;
+            position: relative;
+        }
+
+        .sidebar ul li a {
+            color: #FFD700;
+            text-decoration: none;
+            font-size: 18px;
+            display: flex;
+            align-items: center;
+            transition: color 0.3s ease;
+        }
+
+        .sidebar ul li a:hover {
+            color: #ffffff;
+        }
+
+        .sidebar ul li a i {
+            font-size: 24px;
+            width: 40px;
+            text-align: center;
+        }
+
+        .sidebar ul li a span {
+            margin-left: 15px;
+            white-space: nowrap;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .sidebar:hover ul li a span {
+            opacity: 1;
+        }
+
+        /* Search Bar Styles */
+        .search-bar {
+            margin-left: 100px;
+            padding: 20px;
+            background-color: #ffffff;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transition: margin-left 0.3s ease;
+        }
+
+        .sidebar:hover ~ .search-bar {
+            margin-left: 220px;
+        }
+
+        .search-bar input[type="text"] {
+            width: 300px;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+
+        .search-bar button {
+            padding: 10px 20px;
+            background-color: #FFD700;
+            color: #003366;
+            border: none;
+            border-radius: 5px;
+            margin-left: 10px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: background-color 0.3s ease;
+        }
+
+        .search-bar button:hover {
+            background-color: #ccac00;
+        }
+
+        /* Product Grid Styles */
+        .product-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            padding: 20px;
+            margin-left: 100px;
+            transition: margin-left 0.3s ease;
+        }
+
+        .sidebar:hover ~ .product-grid {
+            margin-left: 220px;
+        }
+
+        .product-card {
+            background-color: #ffffff;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            position: relative;
+        }
+
+        .product-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+        }
+
+        .product-card img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            border-bottom: 1px solid #eee;
+        }
+
+        .product-card h3 {
+            margin: 15px 0;
+            font-size: 20px;
+            color: #003366;
+            padding: 0 15px;
+        }
+
+        .product-card p {
+            color: #777;
+            font-size: 16px;
+            padding: 0 15px;
+            margin-bottom: 15px;
+        }
+
+        .product-card a {
+            display: inline-block;
+            margin: 15px;
+            padding: 10px 20px;
+            background-color: #FFD700;
+            color: #003366;
+            text-decoration: none;
+            border-radius: 5px;
+            font-weight: bold;
+            transition: background-color 0.3s ease;
+        }
+
+        .product-card a:hover {
+            background-color: #ccac00;
+        }
+
+        /* Price Tag */
+        .product-card .price-tag {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background-color: #FFD700;
+            color: #003366;
+            padding: 5px 10px;
+            border-radius: 5px;
+            font-weight: bold;
+            font-size: 14px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        /* Responsive Buy Now Button */
+.product-card a {
+    display: inline-block;
+    margin: 15px;
+    padding: 10px 20px;
+    background-color: #FFD700;
+    color: #003366;
+    text-decoration: none;
+    border-radius: 5px;
+    font-weight: bold;
+    transition: background-color 0.3s ease;
+    text-align: center;
+    width: calc(100% - 30px); /* Full width minus margins */
+    box-sizing: border-box; /* Include padding in width calculation */
+    font-size: 1em; /* Use relative units */
+}
+
+.product-card a:hover {
+    background-color: #ccac00;
+}
+
+/* Adjust button size for smaller screens */
+@media (max-width: 768px) {
+    .product-card a {
+        padding: 12px 24px; /* Larger padding for better touch targets */
+        font-size: 0.9em; /* Slightly smaller font size */
+    }
+}
+
+@media (max-width: 480px) {
+    .product-card a {
+        padding: 10px 20px;
+        font-size: 0.8em; /* Even smaller font size for very small screens */
+    }
+}
+
+        /* New Badge */
+        .product-card .new-badge {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            background-color: #ff4444;
+            color: #fff;
+            padding: 5px 10px;
+            border-radius: 5px;
+            font-weight: bold;
+            font-size: 12px;
+            text-transform: uppercase;
+        }
+
+        /* Subtle Overlay on Hover */
+        .product-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.1);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .product-card:hover::before {
+            opacity: 1;
+        }
+
+    </style>
+</head>
+<body>
+
+    <!-- Sidebar -->
+    <div class="sidebar">
+        <h2>Gavin</h2>
+        <ul>
+            <li><a href="#home"><i class="fas fa-home"></i><span>Home</span></a></li>
+            <li><a href="#products"><i class="fas fa-shopping-bag"></i><span>Products</span></a></li>
+            <li><a href="login.html"><i class="fas fa-user"></i><span>Login</span></a></li>
+            <li><a href="#contact"><i class="fas fa-envelope"></i><span>Contact</span></a></li>
+            <li><a href="#electronics"><i class="fas fa-tv"></i><span>Electronics</span></a></li>
+            <li><a href="#fashion"><i class="fas fa-tshirt"></i><span>Fashion</span></a></li>
+            <li><a href="#home-decor"><i class="fas fa-couch"></i><span>Home Decor</span></a></li>
+            <li><a href="#beauty"><i class="fas fa-spa"></i><span>Beauty</span></a></li>
+            <li><a href="#sports"><i class="fas fa-football-ball"></i><span>Sports</span></a></li>
+        </ul>
+    </div>
+
+    <!-- Search Bar -->
+    <div class="search-bar">
+        <input type="text" placeholder="Search for products...">
+        <button><i class="fas fa-search"></i> Search</button>
+    </div>
+
+    <!-- Main Content -->
+    <h1>Welcome to Gavinea</h1>
+
+    <!-- Product Grid -->
+    <div class="product-grid">
+        <div class="product-card">
+            <div class="price-tag">80000 TZS</div>
+            <div class="new-badge">New</div>
+            <img src="https://static.nike.com/a/images/c_limit,w_592,f_auto/t_product_v1/caa86995-7df8-427a-bb18-551143d0cbb4/ZM+VAPOR+16+ELITE+FG+NU1.png" alt="Product 1">
+            <h3>Nike United Mercurial Vapor 16 Elite</h3>
+            <p>Premium football boots for elite performance.</p>
+            <a href="buy.html" target="_blank">Buy Now</a>
+        </div>
+        <div class="product-card">
+            <div class="price-tag">80000 TZS</div>
+            <img src="https://static.nike.com/a/images/c_limit,w_592,f_auto/t_product_v1/b94d2848-8f08-4ba6-aa77-71ce9f070c4a/AIR+MAX+PLUS+DRIFT.png" alt="Product 2">
+            <h3>Nike Air Max Plus Drift</h3>
+            <p>Stylish and comfortable sneakers for everyday wear.</p>
+            <a href="buy.html" target="_blank">Buy Now</a>
+        </div>
+        <div class="product-card">
+            <div class="price-tag">85000 TZ</div>
+            <img src="https://static.nike.com/a/images/c_limit,w_592,f_auto/t_product_v1/b04ff975-216e-41f7-a4ff-e17011661684/JR+ZOOM+SUPERFLY+10+ACAD+FGMG.png" alt="Product 3">    
+            <h3>Nike Mercurial Vapor 16 Pro</h3>
+            <p>High-quality socks for maximum comfort.</p>
+            <a href="buy.html" target="_blank">Buy Now</a>
+        </div>
+        <!-- Add more products as needed -->
+    </div>
+
+</body>
+</html>
